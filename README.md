@@ -1,7 +1,3 @@
-# ESP32 CSI Tool
-
-[ESP32 CSI Tool Website](https://stevenmhernandez.github.io/ESP32-CSI-Tool/)
-
 The purpose of this project is to allow for the collection of Channel State Information (CSI) from the ESP32 Wi-Fi enabled microcontroller. 
 By collecting this data rich signal source, we can use this information for tasks such as Wi-Fi Sensing and Device-free Localization directly from the small, self contained ESP32 microcontroller.  
 
@@ -28,7 +24,7 @@ We will not be able to assist with general ESP32 issues (those issues that are u
 Next, clone this repository:
 
 ```
-git clone https://github.com/StevenMHernandez/esp32-csi-tool
+git clone https://github.com/cd-hassan/esp32-csi-tool
 ```
 
 Finally, decide which sub-project you would like to flash to your ESP32(s). 
@@ -69,8 +65,7 @@ The following configurations are important for this project:
 7. `ESP32 CSI Tool Config > ****` all options in this menu can be specified per your experiment requirements.
 
 **NOTE:** For some systems, other baud rates may be required. Good options to try are `921600`, `1000000`, `1152000`, `1500000`, and `1552000`.  
-**The higher baud rate the better! Baud rate is extremely important to achieve high sampling rates without lag!**  
-If you have a problem, please leave any relevant information such as operating system, esp-idf version, list of all baud rates work and baud rates that do not work etc in [issue #5](https://github.com/StevenMHernandez/ESP32-CSI-Tool/issues/5). 
+**The higher baud rate the better! Baud rate is extremely important to achieve high sampling rates without lag!** 
 
 ## Flash ESP32
 
@@ -196,9 +191,3 @@ Additionally, the access point code in `./active_ap` will automatically send its
 This means that you only need to set the time for the access point and all other nodes will synchronize automatically.
 
 Finally, the simplest method is to simply run the output of `idf.py monitor` through a utility function which appends the correct timestamp to the output when received on your computer as described in the **Collecting CSI Data* section above.
-
-### Misc.
-
-[ESP32 CSI Tool](https://stevenmhernandez.github.io/ESP32-CSI-Tool/) developed by [Steven M. Hernandez](https://github.com/StevenMHernandez)
-
-[Cite this Tool with BibTeX](https://raw.githubusercontent.com/StevenMHernandez/ESP32-CSI-Tool/master/docs/bibtex/esp32_csi_tool_wowmom.bib)
