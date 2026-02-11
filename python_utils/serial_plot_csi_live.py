@@ -91,21 +91,36 @@ class LogWriter:
 
 
 def render_plots(amp_window, subcarrier_window, motion_window, subcarrier, mode_label):
-    df = np.asarray(amp_window, dtype=np.float32)
-    if df.size == 0:
+    if len(subcarrier_window) == 0:
         return
 
     ax_amp.clear()
     ax_motion.clear()
 
     x_vals = range(len(subcarrier_window))
-    ax_amp.plot(x_vals, subcarrier_window, color="r")
-    ax_amp.set_ylabel("Amplitude")
-    ax_amp.set_title(f"Amplitude plot of Subcarrier {subcarrier} ({mode_label})")
-
-    ax_motion.plot(range(len(motion_window)), motion_window, color="b")
-    ax_motion.set_xlabel("Time")
-    ax_motion.set_ylabel("Motion score")
+    
+    # Amplitude plot - green line on dark background
+    ax_amp.plot(x_vals, subcarrier_window, color="#00FF00", linewidth=2, label="Signal Strength")
+    ax_amp.set_ylabel("Amplitude (Signal Strength)", color="#00FF00", fontsize=10, fontweight='bold')
+    ax_amp.set_title(f"WiFi CSI Signal Analysis - Subcarrier {subcarrier} ({mode_label})", 
+                     color="#00FF00", fontsize=12, fontweight='bold')
+    ax_amp.tick_params(colors="#00FF00")
+    ax_amp.spines['bottom'].set_color("#00FF00")
+    ax_amp.spines['left'].set_color("#00FF00")
+    ax_amp.spines['top'].set_visible(False)
+    ax_amp.spines['right'].set_visible(False)
+    ax_amp.grid(True, color="#00AA00", alpha=0.2, linestyle='--')
+    
+    # Motion score plot - green line on dark background
+    ax_motion.plot(range(len(motion_window)), motion_window, color="#00FF00", linewidth=2, label="Motion Detection")
+    ax_motion.set_xlabel("Time (packets)", color="#00FF00", fontsize=10, fontweight='bold')
+    ax_motion.set_ylabel("Motion Score", color="#00FF00", fontsize=10, fontweight='bold')
+    ax_motion.tick_params(colors="#00FF00")
+    ax_motion.spines['bottom'].set_color("#00FF00")
+    ax_motion.spines['left'].set_color("#00FF00")
+    ax_motion.spines['top'].set_visible(False)
+    ax_motion.spines['right'].set_visible(False)
+    ax_motion.grid(True, color="#00AA00", alpha=0.2, linestyle='--')
 
     fig.canvas.flush_events()
     plt.show()
@@ -189,8 +204,17 @@ def main():
 
 
 if __name__ == "__main__":
-    plt.ion()
-    fig, (ax_amp, ax_motion) = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
+    # Dark theme with green lines (hacker/radar vibes)
+    plt.style.use('dark_background')
+    plt.ioff()
+    
+    fig, (ax_amp, ax_motion) = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+    fig.patch.set_facecolor('#0a0a0a')
+    ax_amp.set_facecolor('#0a0a0a')
+    ax_motion.set_facecolor('#0a0a0a')
+    
     fig.canvas.draw()
+    plt.ion()
     plt.show(block=False)
     main()
+    plt.show(block=True)  # Keep plot window open after data finishes
