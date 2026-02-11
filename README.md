@@ -121,13 +121,67 @@ First, install the python plotting dependencies.
 pip install numpy matplotlib
 ```
 
-Then, to visualize the CSI amplitude, use the following command. 
+### Live Plotting from Serial
+
+To visualize the CSI amplitude in real-time from the device, use:
 
 ```
-idf.py monitor | python ../python_utils/serial_plot_csi_live.py
+idf.py monitor | python ../python_utils/serial_plot_csi_live.py --subcarrier 44
 ```
 
-Currently this script only visualizes subcarrier #44. You can change this by editing the code directly.
+### Replay Mode (Offline Analysis)
+
+To replay a recorded CSI CSV file and visualize it offline without the device:
+
+```
+python ../python_utils/serial_plot_csi_live.py --replay-file example_csi.csv --subcarrier 44
+```
+
+### CLI Flags and Options
+
+The `serial_plot_csi_live.py` script supports the following options:
+
+- `--subcarrier`: Subcarrier index to plot (default: 44)
+- `--max-points`: Maximum number of points to display in plots (default: 200)
+- `--plot-interval`: Seconds between plot updates (default: 0.2)
+- `--stats-interval`: Seconds between statistics prints (default: 1.0)
+- `--replay-file`: Path to a CSV file to replay (offline mode)
+- `--replay-interval`: Seconds between replay lines (default: 0.02)
+- `--log-dir`: Directory to write timestamped CSV logs
+- `--log-interval-min`: Minutes per log file before rotation (default: 10)
+
+### Examples
+
+**Live mode with logging (new log file every 10 minutes):**
+```
+idf.py monitor | python ../python_utils/serial_plot_csi_live.py \
+  --subcarrier 44 \
+  --log-dir ./csi_logs \
+  --log-interval-min 10
+```
+
+**Replay mode with logging every 5 minutes:**
+```
+python ../python_utils/serial_plot_csi_live.py \
+  --replay-file example_csi.csv \
+  --subcarrier 44 \
+  --log-dir ./csi_logs \
+  --log-interval-min 5
+```
+
+**Plot different subcarrier (e.g., 30) with custom update rate:**
+```
+idf.py monitor | python ../python_utils/serial_plot_csi_live.py \
+  --subcarrier 30 \
+  --plot-interval 0.1 \
+  --stats-interval 2.0
+```
+
+### Features
+
+The visualizer displays two plots:
+1. **Amplitude plot**: Shows the amplitude of the selected subcarrier over time
+2. **Motion score plot**: Shows a rolling standard deviation (motion indicator) that spikes during interference or movement
 
 ## Advanced:
 
