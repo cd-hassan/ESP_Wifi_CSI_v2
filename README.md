@@ -24,7 +24,7 @@ We will not be able to assist with general ESP32 issues (those issues that are u
 Next, clone this repository:
 
 ```
-git clone https://github.com/cd-hassan/esp32-csi-tool
+git clone https://github.com/cd-hassan/ESP_Wifi_CSI_v2
 ```
 
 Finally, decide which sub-project you would like to flash to your ESP32(s). 
